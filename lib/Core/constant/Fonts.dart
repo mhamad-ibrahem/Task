@@ -14,6 +14,6 @@ TextStyle buttonTextStyle(){
   return const TextStyle(
       color: AppColors.white,
       fontSize: 20,
-      fontFamily: 'AlexandriaFLF-Bold.ttf',
-      fontWeight: FontWeight.w500);
+      fontFamily: 'AlexandriaFLF',
+      fontWeight: FontWeight.w600);
 }
