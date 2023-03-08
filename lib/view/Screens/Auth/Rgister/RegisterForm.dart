@@ -31,18 +31,18 @@ class RegisterForm extends StatelessWidget {
             CustomTextFormField(
                 icon: GestureDetector(
                   onTap: () {
-                    showCountryDialog(
-                      controller.countryList,
-                      () {
-                        controller.changeCounty(controller.countryList, 1);
-                      },
-                    );
+                    showCountryDialog(controller.countryList, () {
+                      controller.changeCounty(
+                        controller.countryList,
+                        1,
+                      );
+                    }, '1');
                   },
                   child: SizedBox(
                     width: 35,
                     height: 30,
                     child: Image.asset(
-                      controller.countryCode == null
+                      controller.countryCode == '+20'
                           ? AppImages.egyptFlagImage
                           : controller.countryImage!,
                     ),

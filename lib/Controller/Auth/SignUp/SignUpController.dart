@@ -36,7 +36,7 @@ class RegisterImplement extends RegisterController {
   StatusRequest statusRequest = StatusRequest.none;
   List<CountryModel> countryList = countryData;
   String? countryImage;
-  String? countryCode;
+  String countryCode = '+20';
 
   SignupData signupData = SignupData(Get.find());
   @override
@@ -48,12 +48,12 @@ class RegisterImplement extends RegisterController {
   void completevalidate() async {
     var formData = signUpState.currentState;
     print(countryCode);
-    if ((formData!.validate() && countryCode != null)) {
+    if (formData!.validate()) {
       RegisterModel registerModel = RegisterModel(
           password: signUppassword.text,
           confirmPassword: signUppasswordConfirm.text,
           name: name.text,
-          countryCode: countryCode!,
+          countryCode: countryCode,
           phone: phoneNumber.text,
           email: signUpEmail.text);
       statusRequest = StatusRequest.loading;
@@ -70,19 +70,14 @@ class RegisterImplement extends RegisterController {
               .put(HiveKeys.countryCodeKey, response['data']['country_code']);
           authBox!.put(HiveKeys.idKey, response['data']['id']);
           authBox!.put(HiveKeys.tokenKeY, response['data']['token']);
-          authBox!
-              .put(HiveKeys.tokenExpiryKey, response['data']['token_expiry']);
           Get.offAllNamed(AppRoute.home);
         } else {
           warningAuthDialog('email or phone number already exsist');
           statusRequest = StatusRequest.faliure;
         }
       }
-      
+
       update();
-    } else {
-      Get.snackbar("WARNING", "chose country or check valid",
-          backgroundColor: AppColors.white);
     }
   }
 

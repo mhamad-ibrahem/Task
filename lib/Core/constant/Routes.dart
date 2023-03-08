@@ -1,5 +1,4 @@
-class AppRoute{
-
+class AppRoute {
   //welcom
   static const String welcom = '/welcom';
   //auth
@@ -8,4 +7,5 @@ class AppRoute{
   //home
   static const String home = '/home';
   static const String updateInformation = '/updateInformation';
+  static const String changePassword = '/changePassword';
 }

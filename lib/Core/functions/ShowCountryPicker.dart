@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:task/Controller/Auth/SignUp/SignUpController.dart';
+import 'package:task/Controller/Home/UpdateController.dart';
 import 'package:task/Core/constant/Colors.dart';
 
 import '../../data/model/countryModel.dart';
 import '../constant/Size.dart';
 
-RegisterImplement controller = Get.find();
-showCountryDialog(List<CountryModel> countryList, VoidCallback onTap) {
+RegisterImplement registerController = Get.find();
+UpdateImplement updteController = Get.find();
+showCountryDialog(
+    List<CountryModel> countryList, VoidCallback onTap, String screen) {
   Get.bottomSheet(
     Container(
       padding: const EdgeInsets.only(top: 20),
@@ -33,7 +36,11 @@ showCountryDialog(List<CountryModel> countryList, VoidCallback onTap) {
             style: Theme.of(context).textTheme.headline1,
           ),
           onTap: () {
-            controller.changeCounty(countryList, index);
+            screen == '1'
+                ? registerController.changeCounty(countryList, index)
+                : screen == '2'
+                    ? updteController.changeCounty(countryList, index)
+                    : print("No Screen Selected");
           },
         ),
         separatorBuilder: (context, index) => const SizedBox(

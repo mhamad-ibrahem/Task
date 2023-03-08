@@ -5,10 +5,7 @@ import 'package:task/view/Screens/Auth/Login/LoginForm.dart';
 import 'package:task/view/shared/CutsombottomAuth.dart';
 import 'package:task/view/widgets/CustomButton.dart';
 import '../../../../Controller/Auth/SignIn/SignInController.dart';
-import '../../../../Core/Constant/Colors.dart';
 import '../../../../Core/classes/HandilingData.dart';
-import '../../../../Core/constant/Fonts.dart';
-import '../../../../data/model/LoginModel.dart';
 import '../../../shared/CustomTopAuth.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -22,7 +19,7 @@ class LoginScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: GetBuilder<LoginImplement>(
-          builder: (controller) => HandilingDataView(
+          builder: (controller) => HandilingDataRequest(
             statusRequest: controller.statusRequest,
             widget: SingleChildScrollView(
               child: Column(

@@ -11,7 +11,6 @@ warningAuthDialog( String subTitle) {
       middleTextStyle: const TextStyle(
           color: AppColors.black, fontSize: 17, fontWeight: FontWeight.w500),
           titleStyle: const TextStyle(
-          // color: AppColor.red, fontSize: 24, fontWeight: FontWeight.bold)
-          )
+          color: AppColors.red, fontSize: 24, fontWeight: FontWeight.bold)
           );
 }

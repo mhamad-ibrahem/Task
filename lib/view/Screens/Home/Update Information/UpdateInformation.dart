@@ -6,6 +6,8 @@ import 'package:task/view/widgets/CustomButton.dart';
 import 'package:task/view/widgets/CustomScaffold.dart';
 
 import '../../../../Controller/Home/UpdateController.dart';
+import '../../../../Core/classes/HandilingData.dart';
+import '../../../../Core/functions/warningAuthDialog.dart';
 
 class UpdateInformation extends StatelessWidget {
   UpdateInformation({super.key});
@@ -14,24 +16,28 @@ class UpdateInformation extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScaffold(
         title: "Update Information",
-        widget: Column(
-          children: [
-            const SizedBox(
-              height: 40,
-            ),
-            CustomUpdateForm(),
-            const SizedBox(
-              height: 10,
-            ),
-            CustomButton(
-              title: "Save",
-              width: AppSize.screenWidth * 0.75,
-              isPurple: true,
-              onPressed: () {
-                controller.updateInformation();
-              },
-            ),
-          ],
-        ));
+        widget: GetBuilder<UpdateImplement>(
+            builder: (controller) => HandilingDataRequest(
+                statusRequest: controller.statusRequest,
+                widget: Column(
+                  children: [
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    CustomUpdateForm(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CustomButton(
+                      title: "Save",
+                      width: AppSize.screenWidth * 0.75,
+                      isPurple: true,
+                      onPressed: () {
+                        controller.updateInformation();
+
+                      },
+                    ),
+                  ],
+                ))));
   }
 }

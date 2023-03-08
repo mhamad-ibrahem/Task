@@ -19,7 +19,7 @@ class RegisterScreen extends StatelessWidget {
             body: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: GetBuilder<RegisterImplement>(
-        builder: (controller) => HandilingDataView(
+        builder: (controller) => HandilingDataRequest(
           statusRequest: controller.statusRequest,
           widget: SingleChildScrollView(
             child: Column(children: [

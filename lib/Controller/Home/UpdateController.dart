@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:task/Core/classes/HiveKeys.dart';
+import 'package:task/Core/constant/Colors.dart';
 import 'package:task/Core/constant/Routes.dart';
-import 'package:task/data/DataSource/remote/Auth/updateData.dart';
-
+import 'package:task/data/DataSource/remote/updateData.dart';
+import 'package:task/data/model/UpdateUserModel.dart';
+import '../../Core/classes/HiveBox.dart';
 import '../../Core/classes/statusRequest.dart';
 import '../../Core/functions/handilingData.dart';
 import '../../Core/functions/warningAuthDialog.dart';
+import '../../data/DataSource/static/CountryData.dart';
+import '../../data/model/countryModel.dart';
 
 abstract class UpdateController extends GetxController {
   updateInformation();
+  changeCounty(List<CountryModel> country, int index);
 }
 
 class UpdateImplement extends UpdateController {
@@ -18,17 +25,26 @@ class UpdateImplement extends UpdateController {
   StatusRequest statusRequest = StatusRequest.none;
   UpdateData updateData = UpdateData(Get.find());
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  Box authBox = Hive.box(HiveBox.authBox);
+  List<CountryModel> countryList = countryData;
+  String? countryImage;
+  String countryCode = '+20';
+
   @override
   updateInformation() async {
     var formData = formKey.currentState;
     if (formData!.validate()) {
+      UpdateUserModel model = UpdateUserModel(
+        name: name.text,
+        email: updateEmail.text,
+        phone: phoneNumber.text,
+        countryCode: countryCode,
+      );
       statusRequest = StatusRequest.loading;
       update();
       var response = await updateData.updateData(
-        name.text,
-        updateEmail.text,
-        phoneNumber.text,
-        "9634",
+        model,
+        authBox.get(HiveKeys.tokenKeY),
       );
       statusRequest = handilingData(response);
       print(response);
@@ -37,13 +53,34 @@ class UpdateImplement extends UpdateController {
           Get.offAllNamed(
             AppRoute.home,
           );
+          authBox.put(HiveKeys.userNameKey, response['data']['name']);
+          authBox.put(HiveKeys.emailKey, response['data']['email']);
+          authBox.put(HiveKeys.phoneKey, response['data']['phone']);
+          authBox.put(
+              HiveKeys.countryCodeKey, response['data']['country_code']);
+          Get.snackbar("Success", "Your information is updated successfuly",
+              backgroundColor: AppColors.green,
+              colorText: AppColors.white,
+              snackPosition: SnackPosition.BOTTOM);
         } else {
-          warningAuthDialog('check your connection');
+          warningAuthDialog(response['message']);
           statusRequest = StatusRequest.faliure;
         }
       }
+      if (StatusRequest.serverFaliure == statusRequest) {
+        warningAuthDialog("Phone number or email has already been taken");
+        statusRequest = StatusRequest.faliure;
+      }
       update();
     }
+  }
+
+  @override
+  changeCounty(country, index) {
+    countryCode = country[index].code;
+    countryImage = country[index].image;
+    Get.back();
+    update();
   }
 
   @override
