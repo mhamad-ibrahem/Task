@@ -13,7 +13,7 @@ abstract class HomeController extends GetxController {
   logOut();
   initialData();
   deleteAccount();
-  goChangePassword();
+  goToChangePassword();
 }
 
 class HomeImplement extends HomeController {
@@ -36,7 +36,7 @@ class HomeImplement extends HomeController {
   }
 
   @override
-  goChangePassword() {
+  goToChangePassword() {
     Get.toNamed(AppRoute.changePassword);
   }
 
@@ -51,6 +51,7 @@ class HomeImplement extends HomeController {
 
   @override
   initialData() {
+    //to use user information that store before
     name = authBox.get(HiveKeys.userNameKey);
     countryCode = authBox.get(HiveKeys.countryCodeKey);
     phoneNumber = authBox.get(HiveKeys.phoneKey);
@@ -70,7 +71,7 @@ class HomeImplement extends HomeController {
       if (response['success'] == true) {
         Hive.box(HiveBox.authBox).clear();
         Get.offAll(
-          const WelcomScreen(),
+          () => const WelcomScreen(),
         );
       } else {
         statusRequest = StatusRequest.faliure;

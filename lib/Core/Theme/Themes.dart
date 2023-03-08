@@ -3,8 +3,6 @@ import 'package:task/Core/constant/Colors.dart';
 
 class Themes {
   ThemeData currentTheme = Themes.lightsTheme;
-  static ThemeData darksTheme = ThemeData.dark()
-      .copyWith(appBarTheme: const AppBarTheme(color: Colors.white));
   static ThemeData lightsTheme = ThemeData.light().copyWith(
       scaffoldBackgroundColor: AppColors.white,
       textTheme: const TextTheme(

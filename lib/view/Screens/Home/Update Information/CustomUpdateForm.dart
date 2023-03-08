@@ -52,7 +52,7 @@ class CustomUpdateForm extends StatelessWidget {
                 obscure: false,
                 textEditingController: controller.phoneNumber,
                 validator: (val) {
-                  return validation(val!, 2, 10, "number");
+                  return validation(val!, 10, 10, "number");
                 },
                 suffixIcon: null),
             const SizedBox(

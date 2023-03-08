@@ -6,7 +6,7 @@ import '../../../Core/constant/ApiLinks.dart';
 class UpdateData {
   Crud crud;
   UpdateData(this.crud);
-
+//this class have the funcation that contain haider and body and link url for update user informaion
   updateData(
     UpdateUserModel model,
     String token,

@@ -20,20 +20,22 @@ abstract class LoginController extends GetxController {
 }
 
 class LoginImplement extends LoginController {
-  Box? authBox;
+  Box? authBox; //where i store user information
   bool obscureVisability = true;
   late TextEditingController signinEmail;
   late TextEditingController signinpassword;
-  StatusRequest statusRequest = StatusRequest.none;
+  StatusRequest statusRequest =
+      StatusRequest.none; // to hamdiling request state
   LoginData loginData = LoginData(Get.find());
   Services services = Get.find();
 
   @override
   void signInvalidate() async {
-    LoginModel loginModel =
-        LoginModel(password: signinpassword.text, email: signinEmail.text);
     var formData = signinState.currentState;
     if (formData!.validate()) {
+      //check validation
+      LoginModel loginModel = //adding data to request
+          LoginModel(password: signinpassword.text, email: signinEmail.text);
       statusRequest = StatusRequest.loading;
       update();
       var response = await loginData.postData(loginModel);
@@ -41,6 +43,7 @@ class LoginImplement extends LoginController {
       print(response);
       if (StatusRequest.success == statusRequest) {
         if (response['success'] == true) {
+          //storing data information
           authBox!.put(HiveKeys.userNameKey, response['data']['name']);
           authBox!.put(HiveKeys.emailKey, response['data']['email']);
           authBox!.put(HiveKeys.phoneKey, response['data']['phone']);
@@ -48,8 +51,6 @@ class LoginImplement extends LoginController {
               .put(HiveKeys.countryCodeKey, response['data']['country_code']);
           authBox!.put(HiveKeys.idKey, response['data']['id']);
           authBox!.put(HiveKeys.tokenKeY, response['data']['token']);
-          authBox!
-              .put(HiveKeys.tokenExpiryKey, response['data']['token_expiry']);
           Get.offAllNamed(AppRoute.home);
         } else {
           print(response['success']);
@@ -57,10 +58,12 @@ class LoginImplement extends LoginController {
           statusRequest = StatusRequest.faliure;
         }
       }
+      if (StatusRequest.serverFaliure == statusRequest) {
+        warningAuthDialog('email or password is wrong');
+        statusRequest = StatusRequest.faliure;
+      }
       update();
-    } else {
-      print('not valid');
-    }
+    } else {}
   }
 
   @override
@@ -94,6 +97,5 @@ class LoginImplement extends LoginController {
   @override
   void openBox() async {
     authBox = await Hive.openBox(HiveBox.authBox);
-    // stepBox = await Hive.openBox(HiveBox.stepBox);
   }
 }

@@ -4,7 +4,7 @@ import '../../../../Core/constant/ApiLinks.dart';
 class DeleteData {
   Crud crud;
   DeleteData(this.crud);
-
+//this class have the funcation that contain haider and body and link url for delete account
   deleteData(
     String token,
   ) async {

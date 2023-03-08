@@ -16,6 +16,7 @@ abstract class ChangePasswordController extends GetxController {
   changeObscurePassword();
   changeObscureNewPassword();
   changeObscureConfirmPassword();
+  initalData();
 }
 
 class ChangePasswordImplement extends ChangePasswordController {
@@ -23,9 +24,10 @@ class ChangePasswordImplement extends ChangePasswordController {
   late TextEditingController newPassword;
   late TextEditingController confirmPassword;
   StatusRequest statusRequest = StatusRequest.none;
-  ChangePasswordData changePasswordData = ChangePasswordData(Get.find());
+  ChangePasswordData changePasswordData =
+      ChangePasswordData(Get.find()); //instance of class that has the header and body and link url
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  Box authBox = Hive.box(HiveBox.authBox);
+  Box authBox = Hive.box(HiveBox.authBox);// use the box to access user token
   bool passwordObscure = true;
   bool newpasswordObscure = true;
   bool confirmpasswordObscure = true;
@@ -61,7 +63,7 @@ class ChangePasswordImplement extends ChangePasswordController {
       }
       if (StatusRequest.serverFaliure == statusRequest) {
         warningAuthDialog("Your password is wrong");
-         statusRequest = StatusRequest.faliure;
+        statusRequest = StatusRequest.faliure;
       }
       update();
     }
@@ -69,9 +71,7 @@ class ChangePasswordImplement extends ChangePasswordController {
 
   @override
   void onInit() {
-    oldPassword = TextEditingController();
-    newPassword = TextEditingController();
-    confirmPassword = TextEditingController();
+    initalData();
     super.onInit();
   }
 
@@ -99,5 +99,12 @@ class ChangePasswordImplement extends ChangePasswordController {
   changeObscureConfirmPassword() {
     confirmpasswordObscure = !confirmpasswordObscure;
     update();
+  }
+
+  @override
+  initalData() {
+    oldPassword = TextEditingController();
+    newPassword = TextEditingController();
+    confirmPassword = TextEditingController();
   }
 }

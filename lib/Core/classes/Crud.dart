@@ -6,6 +6,7 @@ import '../functions/checkInternetConnection.dart';
 
 
 class Crud {
+  //a class has the post and delete funcation that i use in the all app
   Future<Either<StatusRequest, Map>> postData(
       String linkUrl, Map data,Map<String,String>myheaders ) async {
     try {

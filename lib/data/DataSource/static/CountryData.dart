@@ -1,6 +1,8 @@
 import '../../../Core/constant/Images.dart';
 import '../../model/countryModel.dart';
 
+//static data thet i use it in my app
+
 List<CountryModel> countryData = [
   CountryModel(name: "Syria", code: "+963", image: AppImages.syriaFlagImage),
   CountryModel(

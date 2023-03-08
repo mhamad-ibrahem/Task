@@ -6,8 +6,7 @@ class HiveKeys {
   static const String phoneKey = 'phone';
   static const String countryCodeKey = 'countryCodeKey';
   static const String tokenKeY = 'token';
-  static const String tokenExpiryKey = 'token_expiry';
+  
 
-  //StepKey
-  static const String stepKey = 'step';
+
 }

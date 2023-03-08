@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                 CustomHomeListTile2(
                     title: "Change Password",
                     onPressed: () {
-                      controller.goChangePassword();
+                      controller.goToChangePassword();
                     }),
                 CustomHomeListTile2(
                     title: "Delete Account",

@@ -33,7 +33,7 @@ class LoginForm extends StatelessWidget {
                 obscure: controller.obscureVisability,
                 textEditingController: controller.signinpassword,
                 validator: (val) {
-                  return validation(val!, 3, 30, "name");
+                  return validation(val!, 6, 30, "name");
                 },
                 suffixIcon: IconButton(
                     onPressed: () {

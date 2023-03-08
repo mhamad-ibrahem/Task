@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:task/Core/classes/statusRequest.dart';
-
 import '../constant/Images.dart';
 
 
 class HandilingDataView extends StatelessWidget {
+  //handiling state of the request  when we need to get data
   const HandilingDataView(
       {super.key, required this.statusRequest, required this.widget});
   final StatusRequest statusRequest;
@@ -31,6 +31,7 @@ class HandilingDataView extends StatelessWidget {
 }
 
 class HandilingDataRequest extends StatelessWidget {
+  //handiling state of the request when we need to post data
   const HandilingDataRequest(
       {super.key, required this.statusRequest, required this.widget});
   final StatusRequest statusRequest;

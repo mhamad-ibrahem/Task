@@ -1,4 +1,5 @@
 enum StatusRequest {
+  //custom state thet use to know the state of the request
   none,
   loading,
   success,
@@ -7,12 +8,3 @@ enum StatusRequest {
   serverException,
   offlineFaliure,
 }
-enum MapState{
-    none,
-    offline,
-    searching,
-    online,
-    finadDriver,
-    acceptDriver,
-
-  }

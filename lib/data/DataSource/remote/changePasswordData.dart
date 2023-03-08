@@ -5,7 +5,7 @@ import '../../../../Core/constant/ApiLinks.dart';
 class ChangePasswordData {
   Crud crud;
   ChangePasswordData(this.crud);
-
+//this class have the funcation that contain haider and body and link url for change password
   changePasswordData(
     ChangePasswordModel model,
     String token,

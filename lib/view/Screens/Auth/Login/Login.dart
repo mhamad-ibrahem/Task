@@ -8,6 +8,7 @@ import '../../../../Controller/Auth/SignIn/SignInController.dart';
 import '../../../../Core/classes/HandilingData.dart';
 import '../../../shared/CustomTopAuth.dart';
 
+// ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
   LoginImplement controller = Get.put(LoginImplement());

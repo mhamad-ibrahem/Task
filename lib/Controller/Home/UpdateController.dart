@@ -15,6 +15,7 @@ import '../../data/model/countryModel.dart';
 
 abstract class UpdateController extends GetxController {
   updateInformation();
+  initialData();
   changeCounty(List<CountryModel> country, int index);
 }
 
@@ -85,9 +86,7 @@ class UpdateImplement extends UpdateController {
 
   @override
   void onInit() {
-    updateEmail = TextEditingController();
-    name = TextEditingController();
-    phoneNumber = TextEditingController();
+    initialData();
     super.onInit();
   }
 
@@ -97,5 +96,12 @@ class UpdateImplement extends UpdateController {
     name.dispose();
     phoneNumber.dispose();
     super.onClose();
+  }
+
+  @override
+  initialData() {
+    updateEmail = TextEditingController();
+    name = TextEditingController();
+    phoneNumber = TextEditingController();
   }
 }

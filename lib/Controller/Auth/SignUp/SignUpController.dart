@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:task/Core/constant/Colors.dart';
 import 'package:task/data/model/RegisterModel.dart';
-
 import '../../../Core/Constant/routes.dart';
 import '../../../Core/classes/HiveBox.dart';
 import '../../../Core/classes/HiveKeys.dart';
@@ -20,11 +18,12 @@ abstract class RegisterController extends GetxController {
   void changeObscurePassword();
   void changeObscureConfirmPassword();
   void openBox();
+  void initialData();
   changeCounty(List<CountryModel> country, int index);
 }
 
 class RegisterImplement extends RegisterController {
-  Box? authBox;
+  Box? authBox; //where i store user information
   late TextEditingController signUpEmail;
   late TextEditingController signUppassword;
   late TextEditingController signUppasswordConfirm;
@@ -33,7 +32,8 @@ class RegisterImplement extends RegisterController {
   GlobalKey<FormState> signUpState = GlobalKey<FormState>();
   bool passwordObscure = true;
   bool confirmPasswordObscure = true;
-  StatusRequest statusRequest = StatusRequest.none;
+  StatusRequest statusRequest =
+      StatusRequest.none; // to hamdiling request state
   List<CountryModel> countryList = countryData;
   String? countryImage;
   String countryCode = '+20';
@@ -49,6 +49,8 @@ class RegisterImplement extends RegisterController {
     var formData = signUpState.currentState;
     print(countryCode);
     if (formData!.validate()) {
+      //check validation
+      //adding data to request
       RegisterModel registerModel = RegisterModel(
           password: signUppassword.text,
           confirmPassword: signUppasswordConfirm.text,
@@ -63,6 +65,7 @@ class RegisterImplement extends RegisterController {
       print(response);
       if (StatusRequest.success == statusRequest) {
         if (response['success'] == true) {
+          //store user information
           authBox!.put(HiveKeys.userNameKey, response['data']['name']);
           authBox!.put(HiveKeys.emailKey, response['data']['email']);
           authBox!.put(HiveKeys.phoneKey, response['data']['phone']);
@@ -75,6 +78,10 @@ class RegisterImplement extends RegisterController {
           warningAuthDialog('email or phone number already exsist');
           statusRequest = StatusRequest.faliure;
         }
+      }
+      if (StatusRequest.serverFaliure == statusRequest) {
+        warningAuthDialog('email or phone number already exsist');
+        statusRequest = StatusRequest.faliure;
       }
 
       update();
@@ -96,16 +103,13 @@ class RegisterImplement extends RegisterController {
   @override
   void onInit() {
     openBox();
-    signUpEmail = TextEditingController();
-    signUppassword = TextEditingController();
-    signUppasswordConfirm = TextEditingController();
-    name = TextEditingController();
-    phoneNumber = TextEditingController();
+    initialData();
     super.onInit();
   }
 
   @override
   void onClose() {
+    //t dispose textEditing controller after close
     signUpEmail.dispose();
     signUppassword.dispose();
     signUppasswordConfirm.dispose();
@@ -116,16 +120,24 @@ class RegisterImplement extends RegisterController {
 
   @override
   changeCounty(country, index) {
+    // change the flage and country code
     countryCode = country[index].code;
     countryImage = country[index].image;
     Get.back();
-    print(countryCode);
-    print(countryImage);
     update();
   }
 
   @override
   void openBox() async {
     authBox = await Hive.openBox(HiveBox.authBox);
+  }
+
+  @override
+  void initialData() {
+    signUpEmail = TextEditingController();
+    signUppassword = TextEditingController();
+    signUppasswordConfirm = TextEditingController();
+    name = TextEditingController();
+    phoneNumber = TextEditingController();
   }
 }

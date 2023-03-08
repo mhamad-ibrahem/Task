@@ -9,7 +9,6 @@ class AppImages {
   static const String offlineImage = '${imageRout}offline.json';
 
   //country falge
-  //country
   static const String lebanonFlagImage = '$countryRoute/lebanon.gif';
   static const String syriaFlagImage = '$countryRoute/syria.png';
   static const String alBahreenFlagImage = '$countryRoute/albahreen.jpg';
